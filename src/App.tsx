@@ -1,7 +1,8 @@
 import "./App.css";
 import { User, MessageCircle, X, Heart } from "lucide-react";
+import React, { useState } from "react";
 
-const ProfileSelector = () => {
+const RecipeSelector = () => {
   return (
     <div className="rounded-lg overflow-hidden bg-white shadow-lg pt-2">
       <div className="relative">
@@ -71,15 +72,25 @@ const MatchesList = () => {
 };
 
 function App() {
+  const [currentScreen, setCurrentScreen] = useState("recipe");
+
+  const renderScreen = () => {
+    switch (currentScreen) {
+      case "recipe":
+        return <RecipeSelector />;
+      case "matches":
+        return <MatchesList />;
+    }
+  };
+
   return (
     <>
       <div className="max-w-md mx-auto">
         <nav className="flex justify-between">
-          <User />
-          <MessageCircle />
+          <User onClick={() => setCurrentScreen("recipe")} />
+          <MessageCircle onClick={() => setCurrentScreen("matches")} />
         </nav>
-        <ProfileSelector />
-        {/* <MatchesList /> */}
+        {renderScreen()}
       </div>
     </>
   );
