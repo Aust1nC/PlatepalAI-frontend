@@ -16,4 +16,5 @@ export interface Recipe {
 
 export type RecipeSelectorProps = {
   recipe: Recipe | null;
+  onSwipe: (recipeId: string, direction: string) => void;
 };
