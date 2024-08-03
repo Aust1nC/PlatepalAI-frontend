@@ -111,7 +111,7 @@ const ChatScreen = () => {
 };
 
 function App() {
-  const [currentScreen, setCurrentScreen] = useState("chat");
+  const [currentScreen, setCurrentScreen] = useState("recipe");
 
   const renderScreen = () => {
     switch (currentScreen) {
