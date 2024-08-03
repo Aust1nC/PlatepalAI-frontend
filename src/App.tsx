@@ -43,7 +43,7 @@ const MatchesList = () => {
         {[
           {
             id: 1,
-            name: "pho",
+            name: "Cha Beo",
             imageUrl:
               "http://192.168.0.10:8080/216e618b-db6b-461e-82f6-e3dc4c8ed814.jpeg",
           },
@@ -71,8 +71,47 @@ const MatchesList = () => {
   );
 };
 
+const ChatScreen = () => {
+  const [input, setInput] = useState("");
+
+  const handleSend = () => {
+    if (input.trim()) {
+      console.log(input);
+      setInput("");
+    }
+  };
+
+  return (
+    <div className="rounded-lg shadow-lg p-4">
+      <h2 className="text-2xl font-bold">Chat with Cha Beo</h2>
+      <div className="h-[50vh] order rounded overflow-y-auto mb-4 p-2">
+        {["Hi", "How are you?", "Yeu", "Thom"].map((message, index) => (
+          <div key={index}>
+            <div className="mb-4 p-2 rounded bg-gray-100">{message}</div>
+          </div>
+        ))}
+      </div>
+      <div className="flex">
+        <input
+          type="text"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          className="border flex-1 rounded p-2 mr-2"
+          placeholder="Type a message..."
+        />
+        <button
+          className="bg-blue-500 text-white rounded p-2"
+          onClick={handleSend}
+        >
+          Send
+        </button>
+      </div>
+    </div>
+  );
+};
+
 function App() {
-  const [currentScreen, setCurrentScreen] = useState("recipe");
+  const [currentScreen, setCurrentScreen] = useState("chat");
 
   const renderScreen = () => {
     switch (currentScreen) {
@@ -80,13 +119,15 @@ function App() {
         return <RecipeSelector />;
       case "matches":
         return <MatchesList />;
+      case "chat":
+        return <ChatScreen />;
     }
   };
 
   return (
     <>
       <div className="max-w-md mx-auto">
-        <nav className="flex justify-between">
+        <nav className="flex justify-between mb-4">
           <User onClick={() => setCurrentScreen("recipe")} />
           <MessageCircle onClick={() => setCurrentScreen("matches")} />
         </nav>
