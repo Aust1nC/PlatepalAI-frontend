@@ -4,11 +4,16 @@ import { useState, useEffect } from "react";
 import MatchesList from "./components/MatchesList";
 import RecipeSelector from "./components/RecipeSelector";
 import ChatScreen from "./components/ChatScreen";
-import { fetchRandomRecipe, saveSwipe } from "./services/recipeService";
+import {
+  fetchMatches,
+  fetchRandomRecipe,
+  saveSwipe,
+} from "./services/recipeService";
 
 function App() {
   const [currentScreen, setCurrentScreen] = useState("recipe");
   const [currentRecipe, setCurrentRecipe] = useState(null);
+  const [matches, setMatches] = useState([]);
 
   const loadRandomProfile = async () => {
     try {
@@ -19,15 +24,27 @@ function App() {
     }
   };
 
-  const onSwipe = (recipeId: string, direction: string) => {
-    if (direction === "right") {
-      saveSwipe(recipeId);
+  const loadMatches = async () => {
+    try {
+      const matches = await fetchMatches();
+      setMatches(matches);
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  const onSwipe = async (recipeId: string, direction: string) => {
     loadRandomProfile();
+
+    if (direction === "right") {
+      await saveSwipe(recipeId);
+      await loadMatches();
+    }
   };
 
   useEffect(() => {
     loadRandomProfile();
+    loadMatches();
   }, []);
 
   const renderScreen = () => {
@@ -35,7 +52,12 @@ function App() {
       case "recipe":
         return <RecipeSelector recipe={currentRecipe} onSwipe={onSwipe} />;
       case "matches":
-        return <MatchesList onSelectMatch={() => setCurrentScreen("chat")} />;
+        return (
+          <MatchesList
+            matches={matches}
+            onSelectMatch={() => setCurrentScreen("chat")}
+          />
+        );
       case "chat":
         return <ChatScreen />;
     }

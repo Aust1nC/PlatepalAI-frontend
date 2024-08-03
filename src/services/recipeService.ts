@@ -31,3 +31,16 @@ export const saveSwipe = async (recipeId: string) => {
     throw new Error("Server error");
   }
 };
+
+export const fetchMatches = async () => {
+  try {
+    const response = await fetch(`${import.meta.env.VITE_BASE_URL}/matches`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch matches");
+    }
+    return response.json();
+  } catch (error) {
+    throw new Error("Server error");
+  }
+};
