@@ -1,5 +1,5 @@
 import React from "react";
-import { MatchesListProps } from "../types";
+import { MatchesListProps } from "../types/match";
 import { truncateString } from "../utils";
 
 const MatchesList: React.FC<MatchesListProps> = ({

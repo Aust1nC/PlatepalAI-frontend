@@ -1,6 +1,6 @@
 import React from "react";
 import { Heart, X } from "lucide-react";
-import { RecipeSelectorProps } from "../types";
+import { RecipeSelectorProps } from "../types/recipe";
 import { truncateString } from "../utils";
 
 const RecipeSelector: React.FC<RecipeSelectorProps> = ({ recipe, onSwipe }) => {
