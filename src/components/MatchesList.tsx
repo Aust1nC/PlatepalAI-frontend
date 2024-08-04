@@ -9,14 +9,14 @@ const MatchesList: React.FC<MatchesListProps> = ({
   const fallbackImageUrl = "https://placehold.co/600x400";
 
   return (
-    <div className="rounded-lg shadow-lg p-4">
+    <div className="rounded-lg shadow-xl p-4">
       <h2 className="text-2xl font-bold mb-4">Matches</h2>
       <ul className="h-[70vh] overflow-y-auto">
         {matches.map((match) => (
           <li key={match.recipe.id} className="mb-2">
             <button
               className="w-full rounded flex items-center hover:bg-gray-100 cursor-pointer"
-              onClick={() => onSelectMatch(match.recipe.id)}
+              onClick={() => onSelectMatch(match.recipe, match.conversationId)}
             >
               <img
                 src={

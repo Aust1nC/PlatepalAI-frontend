@@ -7,6 +7,6 @@ export interface Match {
 }
 
 export type MatchesListProps = {
-  onSelectMatch: (matchId: string) => void;
   matches: Match[];
+  onSelectMatch: (matchRecipe: Recipe, conversationId: string) => void;
 };

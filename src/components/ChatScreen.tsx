@@ -1,22 +1,31 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { ChatProps } from "../types/chat";
+import { sendMessage } from "../services/conversationService";
 
-const ChatScreen = () => {
+const ChatScreen: React.FC<ChatProps> = ({
+  currentMatch,
+  conversation,
+  refreshState,
+}) => {
   const [input, setInput] = useState("");
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
-      console.log(input);
+      await sendMessage(conversation.id, input);
       setInput("");
     }
+    refreshState();
   };
 
   return (
     <div className="rounded-lg shadow-lg p-4">
-      <h2 className="text-2xl font-bold">Chat with Cha Beo</h2>
+      <h2 className="text-2xl font-bold">Chat with {currentMatch.name}</h2>
       <div className="h-[50vh] order rounded overflow-y-auto mb-4 p-2">
-        {["Hi", "How are you?", "Yeu", "Thom"].map((message, index) => (
+        {conversation.messages.map((message, index) => (
           <div key={index}>
-            <div className="mb-4 p-2 rounded bg-gray-100">{message}</div>
+            <div className="mb-4 p-2 rounded bg-gray-100">
+              {message.messageText}
+            </div>
           </div>
         ))}
       </div>
